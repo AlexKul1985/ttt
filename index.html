@@ -11,6 +11,9 @@
 			padding: 0;
 
 		}
+		body {
+			background: #262626;
+		}
 		.header {
 			
 			background: #262626;
@@ -146,7 +149,7 @@
 	color: #fff;
 	visibility: hidden;
 }
-.wrap_info .cl{
+ a.cl{
 	position: absolute;
 	top:200px;
 	width: 100px;
@@ -186,9 +189,10 @@
 	<section class="info">
 		<div class="wrap_info">
 			<h1>Метка</h1>
-			<span class="cl">
+			
 		</div>
 	</section>
+	<a href="javascript:void(0);" class="cl"></a>
 
 	<script src= 'bower_components/jquery/dist/jquery.js'></script>
 	<script>
@@ -196,15 +200,19 @@
 		var elem = $('.wrap_info  h1');
 		var elem1 = $('.list_item a');
 		var elem_p = $('.list_item');
-		var cl = $('.cl');
+		var cl = $('a.cl');
 		var item;
 		var a = WrapSpan('.list_item');
+		var flag = false;
 		
 		var start_point = elem_p.eq(0).offset().left;
 	////////////////////////////////////////////////////
 		elem1.on('click',function(){
-			var childrens = $(this).children();
-			var parent = $(this).parent();
+			if(flag) return;
+			flag = true;
+			item = $(this);
+			var childrens =item.children();
+			var parent =item.parent();
 			var index = parent.index();
 			var def = 0;
 			if(index > 0) {
@@ -226,6 +234,39 @@
 
 			},100);
 		});
+
+//////////////////////////////////////////////////
+
+cl.on('click',function(){
+	if(!item) return;
+			var childrens =item.children();
+			var parent =item.parent();
+			var index = parent.index();
+			var def = 0;
+			if(index > 0) {
+
+				def = parent.offset().left - parent.prev().offset().left;
+			}
+			var n = childrens.length - 1;
+			var id = setInterval(function(){
+			childrens.eq(n).animate({
+			top:0,
+			left:0
+		},400);
+		if(n <= 0) { flag = false; clearInterval(id); }
+		else n--;
+
+			},100);
+
+});
+
+
+
+
+
+
+
+//////////////////////////////////////////////////		
 /////////////////////////////////////////////////
 		function WrapSpan(selector){
 			var search = $(selector);
