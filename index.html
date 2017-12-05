@@ -124,7 +124,38 @@
 			border:5px solid rgba(0,0,0,.6);
 			
 		}
-
+		.wrap_info {
+			position: absolute;
+			top:0;
+			left: 50%;
+			transform:translateX(-50%);
+			width:600px;
+			height: 600px;
+			background: #262626;
+			z-index: -1;
+		}
+.wrap_info  {
+	
+	
+}
+.wrap_info  h1 {
+	/*position: relative;*/
+	margin-top: 100px;
+	margin-left: 120px;
+	z-index: 11;
+	color: #fff;
+	visibility: hidden;
+}
+.wrap_info .cl{
+	position: absolute;
+	top:200px;
+	width: 100px;
+	height: 100px;
+	background: red;
+}
+.list_item a span {
+	display: inline-block;
+}
 
 	</style>
 </head>
@@ -152,9 +183,116 @@
 		</div>
 		
 	</section>
+	<section class="info">
+		<div class="wrap_info">
+			<h1>Метка</h1>
+			<span class="cl">
+		</div>
+	</section>
 
-		
+	<script src= 'bower_components/jquery/dist/jquery.js'></script>
 	<script>
+		////////////////////////////////////////////
+		var elem = $('.wrap_info  h1');
+		var elem1 = $('.list_item a');
+		var elem_p = $('.list_item');
+		var cl = $('.cl');
+		var item;
+		var a = WrapSpan('.list_item');
+		
+		var start_point = elem_p.eq(0).offset().left;
+	////////////////////////////////////////////////////
+		elem1.on('click',function(){
+			var childrens = $(this).children();
+			var parent = $(this).parent();
+			var index = parent.index();
+			var def = 0;
+			if(index > 0) {
+
+				def = parent.offset().left - parent.prev().offset().left;
+			}
+			var n = childrens.length - 1;
+			var id = setInterval(function(){
+			childrens.eq(n).css({
+			position:'relative',
+			top:0,
+			left:0
+		}).animate({
+			top:elem.offset().top - childrens.eq(n).offset().top,
+			left:elem.offset().left - elem1.offset().left - def
+		},400);
+		if(n <= 0) clearInterval(id);
+		else n--;
+
+			},100);
+		});
+/////////////////////////////////////////////////
+		function WrapSpan(selector){
+			var search = $(selector);
+			var text = '';
+			var result_text = '';
+			var arr  = [];
+			
+			search.each(function(){
+				if($(this).children() !='undefined') {
+					text = $(this).children().html();
+				}
+				else {
+					text = $(this).html();
+				}
+				// text = text.toString();
+				for(var i = 0; i < text.length ; i++){
+				if(text[i] == " ") result_text +='<span>&nbsp;</span>';	
+				else result_text +='<span>'+text[i]+'</span>';	
+				}
+				
+					
+				arr.push(result_text);
+				result_text = '';
+			});
+			search.children(a).html('');
+			search.each(function(index){
+				$(this).children().html(arr[index]);
+			});
+			
+
+		}
+	//////////////////////////////////////////////////	 
+		 function func(){
+		 	console.log(this);
+		 }
+		 // console.log(a);
+		
+			 func();
+
+
+
+
+		// elem1.on('click',function(){
+		// 	item = $(this).parent();
+		// 	item.css({
+		// 	position:'relative',
+		// 	top:0,
+		// 	left:0
+		// }).animate({
+
+		// 	top:elem.offset().top - item.offset().top,
+		// 	left:(elem.offset().left - item.offset().left)
+
+		// },700);
+		// // console.log(item);
+		// });
+
+		// cl.on('click',function(){
+		// 	console.log(1);
+		// // 	item.css({
+		// // 	position:'relative',	
+		// // 	top:0,
+		// // 	left:0
+
+		// // });
+		// });
+
 	</script>
 </body>
 </html>
