@@ -12,7 +12,7 @@
 
 		}
 		body {
-			background: #262626;
+			/*background: #262626;*/
 		}
 		.header {
 			
@@ -29,8 +29,11 @@
 		}
 		.list .list_item {
 			list-style: none;
+
 		}
 		.list .list_item a {
+			position: relative;
+			z-index: 2;
 			color: #fff;
 			text-decoration: none;
 		}
@@ -127,16 +130,24 @@
 			border:5px solid rgba(0,0,0,.6);
 			
 		}
+		.info{
+			/*position: relative;*/
+		}
 		.wrap_info {
 			position: absolute;
-			top:0;
+			top:0%;
 			left: 50%;
-			transform:translateX(-50%);
+			transform:translateX(-50%) scale(0) rotate(180deg);
 			width:600px;
 			height: 600px;
-			background: #262626;
-			z-index: -1;
+			background: rgba(5,5,5,.7);
+			z-index: 1;
+			transition: transform 1s ease-out;
 		}
+		.wrap_info_add{
+			transform:translateX(-50%) scale(1) rotate(0deg);
+		}
+
 .wrap_info  {
 	
 	
@@ -158,6 +169,7 @@
 }
 .list_item a span {
 	display: inline-block;
+	transform: translate(0,0) rotate(0deg);
 }
 
 	</style>
@@ -196,8 +208,99 @@
 
 	<script src= 'bower_components/jquery/dist/jquery.js'></script>
 	<script>
-		////////////////////////////////////////////
+	///////////////////////////////////
+		var arr_op = ['','-'];
+function func(){
+    var rand = Math.floor(Math.random()*2);
+    return arr_op[rand];
+}
+///////////////////////////////////////
+//////////////////////////////////////
+/////////////////////////////////////
+////////////////////////////////////
+function getRandomNewNumber(number){
+    
+return Math.floor(Math.random()*number);    
+} 
+///////////////////////////////////////
+function isValueToNewArray(valueX,valueY,arr){
+    
+    for(var j=0; j<arr.length; j++){
+        if((arr[j].x == valueX) && (arr[j].y == valueY)){
+            return true;
+
+        }
+    }
+    return false;
+}
+////////////////////////////////////////
+///////////////////////////////////////
+////////////////////////////////////////
+var randNumberForDef = [10,20,30,40];
+
+function generateArrRandObjects(string,randNumberForDef){
+    var number = string.length;
+    var rand_x;
+    var rand_y;
+    var rand_def_x;
+    var rand_def_y;
+    var arr = [];
+    if(number == 1){
+        rand_def_x = getRandomNewNumber(randNumberForDef.length);
+                rand_def_y = getRandomNewNumber(randNumberForDef.length);
+                arr.push({
+                x:func()+rand_x*randNumberForDef[rand_def_x],
+                y:func()+rand_y*randNumberForDef[rand_def_y]
+            });
+                return arr;
+    }
+    if(arr.length == 0) {
+        while(arr.length != 1){
+            rand_x = getRandomNewNumber(number);
+            rand_y = getRandomNewNumber(number);
+            
+            if(rand_x == 0 && rand_y == 0){
+                continue;
+            }
+            else {
+                rand_def_x = getRandomNewNumber(randNumberForDef.length);
+                rand_def_y = getRandomNewNumber(randNumberForDef.length);
+                arr.push({
+                x:func()+rand_x*randNumberForDef[rand_def_x],
+                y:func()+rand_y*randNumberForDef[rand_def_y]
+            });
+            }
+            
+        }
+    
+    }
+
+    while(arr.length != number){
+        rand_x = getRandomNewNumber(number);
+        rand_y = getRandomNewNumber(number);
+        rand_def_x = getRandomNewNumber(randNumberForDef.length);
+        rand_def_y = getRandomNewNumber(randNumberForDef.length);
+        if(!isValueToNewArray(rand_x*rand_def_x,rand_y*rand_def_y,arr)) {
+
+        arr.push({
+        x:func()+rand_x*randNumberForDef[rand_def_x],
+        y:func()+rand_y*randNumberForDef[rand_def_y]
+    });
+        }
+        else continue;
+
+    }
+  
+  return arr;
+
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+		////////////////////////////////////////////////////////////////////////////
 		var elem = $('.wrap_info  h1');
+		var wrap_info = $('.wrap_info');
 		var elem1 = $('.list_item a');
 		var elem_p = $('.list_item');
 		var cl = $('a.cl');
@@ -211,6 +314,28 @@
 			if(flag) return;
 			flag = true;
 			item = $(this);
+			/////////////////
+			var elem_text = elem1.not(item).find('span'); 
+			var text = elem1.not(item).html();
+			console.log(text);
+			var new_arr = generateArrRandObjects(text,randNumberForDef);
+			for(var n1=0; n1<new_arr.length; n1++) {
+		    elem_text.eq(n1).css({
+			transform:'translate('+parseInt(new_arr[n1].x)+'px,'+parseInt(new_arr[n1].y) +'px) rotate('+func()+'175deg)',
+			transition:'transform 7s ease-out, opacity 7s',
+			opacity:'0'
+			});
+		}
+
+		wrap_info.addClass('wrap_info_add');
+
+
+
+
+
+
+
+///////////////////////////////////////////
 			var childrens =item.children();
 			var parent =item.parent();
 			var index = parent.index();
@@ -220,7 +345,8 @@
 				def = parent.offset().left - parent.prev().offset().left;
 			}
 			var n = childrens.length - 1;
-			var id = setInterval(function(){
+			setTimeout(function(){
+				var id = setInterval(function(){
 			childrens.eq(n).css({
 			position:'relative',
 			top:0,
@@ -233,6 +359,8 @@
 		else n--;
 
 			},100);
+			},900);
+			
 		});
 
 //////////////////////////////////////////////////
@@ -243,11 +371,18 @@ cl.on('click',function(){
 			var parent =item.parent();
 			var index = parent.index();
 			var def = 0;
+			var elem_text = elem1.not(item).find('span'); 
+			elem_text.css({
+			    transform:"translate(0,0) rotate(0deg)",
+			    opacity:'1',
+			    transition:'transform 5s ease-out, opacity 5s',
+			});
 			if(index > 0) {
 
 				def = parent.offset().left - parent.prev().offset().left;
 			}
 			var n = childrens.length - 1;
+			wrap_info.removeClass('wrap_info_add');
 			var id = setInterval(function(){
 			childrens.eq(n).animate({
 			top:0,
@@ -298,41 +433,12 @@ cl.on('click',function(){
 			
 
 		}
-	//////////////////////////////////////////////////	 
-		 function func(){
-		 	console.log(this);
-		 }
-		 // console.log(a);
+	//////////////////////////////////////////////////	
+
+
+
+
 		
-			 func();
-
-
-
-
-		// elem1.on('click',function(){
-		// 	item = $(this).parent();
-		// 	item.css({
-		// 	position:'relative',
-		// 	top:0,
-		// 	left:0
-		// }).animate({
-
-		// 	top:elem.offset().top - item.offset().top,
-		// 	left:(elem.offset().left - item.offset().left)
-
-		// },700);
-		// // console.log(item);
-		// });
-
-		// cl.on('click',function(){
-		// 	console.log(1);
-		// // 	item.css({
-		// // 	position:'relative',	
-		// // 	top:0,
-		// // 	left:0
-
-		// // });
-		// });
 
 	</script>
 </body>
