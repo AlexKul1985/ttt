@@ -190,6 +190,8 @@
 .list_item a span {
 	display: inline-block;
 	transform: translate(0,0) rotate(0deg);
+	opacity: 1;
+	transition: transform 20s ease-out, opacity 20s;
 }
 
 	</style>
@@ -347,8 +349,8 @@ function generateArrRandObjects(string,randNumberForDef){
 			for(var n1=0; n1<new_arr.length; n1++) {
 		    elem_text.eq(n1).css({
 			transform:'translate('+parseInt(new_arr[n1].x)+'px,'+parseInt(new_arr[n1].y) +'px) rotate('+func()+'175deg)',
-			transition:'transform 10s ease-out, opacity 10s',
 			opacity:'0'
+			// transition:'transform 10s ease-out, opacity 10s'
 			});
 		}
 
@@ -406,8 +408,8 @@ cl.on('click',function(){
 			var elem_text = elem1.not(item).find('span'); 
 			elem_text.css({
 			    transform:"translate(0,0) rotate(0deg)",
-			    opacity:'1',
-			    transition:'transform 10s ease-out, opacity 10s',
+			    opacity:'1'
+			     // transition:'transform 10s ease-out, opacity 10s',
 			});
 			if(index > 0) {
 
