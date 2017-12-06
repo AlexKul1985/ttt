@@ -13,10 +13,26 @@
 		}
 		body {
 			/*background: #262626;*/
+			overflow: hi
+
 		}
 		.header {
-			
+			position: relative;
+			opacity: 1;
 			background: #262626;
+			transition:background 1s ease-out;
+		}
+		.header .metka {
+			position: absolute;
+			bottom:-50px;
+			left:30%;
+			transform: translateX(-50%);
+			visibility: hidden;
+		}
+		.header_tr{
+			background: transparent;
+			background: rgba(0,0,0,0);
+
 		}
 		.list {
 			display: flex;
@@ -138,34 +154,32 @@
 			top:0%;
 			left: 50%;
 			transform:translateX(-50%) scale(0) rotate(180deg);
-			width:600px;
+			width:1200px;
 			height: 600px;
-			background: rgba(5,5,5,.7);
+			background:#262626;
 			z-index: 1;
-			transition: transform 1s ease-out;
+			opacity: 0;
+			transition: transform 1.2s ease-out, opacity 1.2s ease-out;
 		}
 		.wrap_info_add{
 			transform:translateX(-50%) scale(1) rotate(0deg);
+			opacity: 1;
 		}
 
-.wrap_info  {
+
+
 	
-	
-}
-.wrap_info  h1 {
-	/*position: relative;*/
-	margin-top: 100px;
-	margin-left: 120px;
-	z-index: 11;
-	color: #fff;
-	visibility: hidden;
-}
+
  a.cl{
 	position: absolute;
-	top:200px;
-	width: 100px;
-	height: 100px;
-	background: red;
+	top:2%;
+	right:2%;
+	width: 40px;
+	height: 40px;
+	z-index: 3;
+	background: url(close.svg) center no-repeat ;
+	-webkit-background-size: 100%;
+	background-size: 100%;
 }
 .list_item a span {
 	display: inline-block;
@@ -186,6 +200,7 @@
 				
 			</ul>
 		</nav>
+		<span class="metka">Метка</span>
 	</header>
 	<section class="sect">
 		<div class="wrap_photo">
@@ -196,15 +211,17 @@
 				
 			</div>
 		</div>
+		<div class="wrap_info">
+			
+			
+		<a href="javascript:void(0);" class="cl">
+			
+		</a>
+		</div>
+		
 		
 	</section>
-	<section class="info">
-		<div class="wrap_info">
-			<h1>Метка</h1>
-			
-		</div>
-	</section>
-	<a href="javascript:void(0);" class="cl"></a>
+	
 
 	<script src= 'bower_components/jquery/dist/jquery.js'></script>
 	<script>
@@ -299,11 +316,12 @@ function generateArrRandObjects(string,randNumberForDef){
 
 
 		////////////////////////////////////////////////////////////////////////////
-		var elem = $('.wrap_info  h1');
+		var elem = $('.header .metka');
 		var wrap_info = $('.wrap_info');
 		var elem1 = $('.list_item a');
 		var elem_p = $('.list_item');
 		var cl = $('a.cl');
+		var header = $('.header');
 		var item;
 		var a = WrapSpan('.list_item');
 		var flag = false;
@@ -328,6 +346,7 @@ function generateArrRandObjects(string,randNumberForDef){
 		}
 
 		wrap_info.addClass('wrap_info_add');
+		header.addClass('header_tr');
 
 
 
@@ -345,7 +364,7 @@ function generateArrRandObjects(string,randNumberForDef){
 				def = parent.offset().left - parent.prev().offset().left;
 			}
 			var n = childrens.length - 1;
-			setTimeout(function(){
+			
 				var id = setInterval(function(){
 			childrens.eq(n).css({
 			position:'relative',
@@ -354,12 +373,12 @@ function generateArrRandObjects(string,randNumberForDef){
 		}).animate({
 			top:elem.offset().top - childrens.eq(n).offset().top,
 			left:elem.offset().left - elem1.offset().left - def
-		},400);
+		},600);
 		if(n <= 0) clearInterval(id);
 		else n--;
 
 			},100);
-			},900);
+			
 			
 		});
 
@@ -383,6 +402,7 @@ cl.on('click',function(){
 			}
 			var n = childrens.length - 1;
 			wrap_info.removeClass('wrap_info_add');
+			header.removeClass('header_tr');
 			var id = setInterval(function(){
 			childrens.eq(n).animate({
 			top:0,
