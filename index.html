@@ -61,8 +61,14 @@
 			position: relative;
 			
 			margin: 100px auto 0;
+			transform: scale(1) rotateZ(0deg) rotateY(0deg);
+			opacity: 1;
+			transition: transform 1s ease-out,opacity 2s ease-out;
 			
-			
+		}
+		.wrap_photo_scale{
+			transform: scale(0) rotateZ(180deg) rotateY(180deg);
+			opacity: 0;
 		}
 		.wrap_photo::before{
 			content: "";
@@ -127,7 +133,7 @@
 			
 			width: 100%;
 			transform: scale(1.9) translate(-3px,37px);
-			
+			font-size:0;
 			/*border-radius: 50%;*/
 
 		}
@@ -159,7 +165,7 @@
 			background:#262626;
 			z-index: 1;
 			opacity: 0;
-			transition: transform 1.2s ease-out, opacity 1.2s ease-out;
+			transition: transform 1s ease-out, opacity 1s ease-out;
 		}
 		.wrap_info_add{
 			transform:translateX(-50%) scale(1) rotate(0deg);
@@ -253,7 +259,7 @@ function isValueToNewArray(valueX,valueY,arr){
 ////////////////////////////////////////
 ///////////////////////////////////////
 ////////////////////////////////////////
-var randNumberForDef = [10,20,30,40];
+var randNumberForDef = [100,200,30,40];
 
 function generateArrRandObjects(string,randNumberForDef){
     var number = string.length;
@@ -322,6 +328,7 @@ function generateArrRandObjects(string,randNumberForDef){
 		var elem_p = $('.list_item');
 		var cl = $('a.cl');
 		var header = $('.header');
+		var wrap_photo = $('.wrap_photo');
 		var item;
 		var a = WrapSpan('.list_item');
 		var flag = false;
@@ -340,13 +347,19 @@ function generateArrRandObjects(string,randNumberForDef){
 			for(var n1=0; n1<new_arr.length; n1++) {
 		    elem_text.eq(n1).css({
 			transform:'translate('+parseInt(new_arr[n1].x)+'px,'+parseInt(new_arr[n1].y) +'px) rotate('+func()+'175deg)',
-			transition:'transform 7s ease-out, opacity 7s',
+			transition:'transform 10s ease-out, opacity 10s',
 			opacity:'0'
 			});
 		}
 
 		wrap_info.addClass('wrap_info_add');
-		header.addClass('header_tr');
+		wrap_photo.addClass('wrap_photo_scale');
+
+		setTimeout(function(){
+			header.addClass('header_tr');
+		},800);
+			
+
 
 
 
@@ -373,11 +386,11 @@ function generateArrRandObjects(string,randNumberForDef){
 		}).animate({
 			top:elem.offset().top - childrens.eq(n).offset().top,
 			left:elem.offset().left - elem1.offset().left - def
-		},600);
+		},400);
 		if(n <= 0) clearInterval(id);
 		else n--;
 
-			},100);
+			},60);
 			
 			
 		});
@@ -394,7 +407,7 @@ cl.on('click',function(){
 			elem_text.css({
 			    transform:"translate(0,0) rotate(0deg)",
 			    opacity:'1',
-			    transition:'transform 5s ease-out, opacity 5s',
+			    transition:'transform 10s ease-out, opacity 10s',
 			});
 			if(index > 0) {
 
@@ -403,6 +416,7 @@ cl.on('click',function(){
 			var n = childrens.length - 1;
 			wrap_info.removeClass('wrap_info_add');
 			header.removeClass('header_tr');
+			wrap_photo.removeClass('wrap_photo_scale');
 			var id = setInterval(function(){
 			childrens.eq(n).animate({
 			top:0,
