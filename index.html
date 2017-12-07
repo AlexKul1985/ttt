@@ -497,7 +497,8 @@ a.cl_show{
 		var item;
 		var a = WrapSpan('.list_item');
 		var flag = false;
-		var start_point = elem_p.eq(0).offset().left;
+		
+		var l_metka;
 		
 	/////////////////////////////////////////////////////
 		elem1.on('click',function(){
@@ -530,7 +531,7 @@ a.cl_show{
 			var childrens =item.children();
 			var parent =item.parent();
 			var index = parent.index();
-			var l_metka = elem.offset().left;
+			 l_metka = elem.offset().left;
 			var l_this = item.offset().left;
 			var def = 0;
 			var n = null;
