@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<link href="https://fonts.googleapis.com/css?family=Fjalla+One|Pacifico" rel="stylesheet">
 	<title>
 	</title>
@@ -25,6 +27,7 @@
 			
 			opacity: 1;
 			background: rgba(7,7,7,.7);
+
 			transition:background 1s ease-out;
 		}
 		.sect::before{
@@ -107,9 +110,10 @@
 		.sect{
 			text-align: center;
 			min-height: 100vh;
-			background:  url(top_bg.jpg) 0 0 no-repeat;
+			background:  url(top_bg.jpg) center no-repeat;
 			-webkit-background-size: cover;
 			background-size: cover;
+			overflow: hidden;
 		}
 		.block_form{
 			position: absolute;
@@ -131,17 +135,59 @@
 			border:none;
 			background: rgba(0,0,0,0);
 			background: transparent;
-			border-bottom:2px solid #fff;
-			padding: 10px;
+			border-bottom:3px solid #fff;
+			padding: 10px 10px 5px;
 			box-sizing: border-box;
 			color: #fff;
 			font-family: 'Pacifico', cursive;
-			font-size: .85rem;
+			font-size: 1rem;
 		}
-		::-webkit-input-placeholder {color:#fff;}
-		::-moz-placeholder          {color:#fff;}/* Firefox 19+ */
-		:-moz-placeholder           {color:#fff;}/* Firefox 18- */
-		:-ms-input-placeholder      {color:#fff;}
+		.text_wrap{
+			width:100%;
+			position: relative;
+
+		}
+		.text_wrap .placeholder{
+			position: relative;
+			font-family: 'Pacifico', cursive;
+			position: absolute;
+			top:6px;
+			left: 0;
+			width:100%;
+			color: #fff;
+			z-index: -1;
+			font-size: .85rem;
+			transition:top .4s ease-out, left .4s ease-out ,font-size .4s ease-out;
+		}
+		.text_wrap .placeholder::after{
+			content: "";
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left:60%;
+			width:0%;
+			height: 1px;
+			background: #fff;
+			transition: width .4s ease-out;
+
+		}
+		.text_field:focus ~ .placeholder::after,
+		.text_field:valid ~ .placeholder::after
+		{
+			width: 82%;
+		}
+		
+		.text_field:focus ~ .placeholder,
+		.text_field:valid ~ .placeholder
+		{
+		
+			font-size: .75rem;
+			top:-10px;
+			left:-170px;
+		}
+		
+
+		
 		.btn_field{
 			position: relative;
 			background: rgba(0,0,0,0);
@@ -152,6 +198,7 @@
 			font-family: 'Pacifico', cursive;
 			font-size: 1.4rem;
 			padding: 15px 20px;
+			outline: none;
 
 		}
 		.btn_wrap_two::before{
@@ -370,10 +417,14 @@ a.cl_show{
 	opacity: 1;
 	transition: transform 20s ease-out, opacity 20s;
 }
+.wrapper{
+	overflow: hidden;
+}
 
 	</style>
 </head>
 <body>
+	<div class="wrapper">
 	<header class="header">
 		<nav>
 			<ul class="list">
@@ -388,11 +439,19 @@ a.cl_show{
 		<span class="metka">Метка</span>
 	</header>
 	<section class="sect">
-		<form action="" method="post" name="email" class="block_form">
-			
-			<input type="text" name="" class="text_field" placeholder="Ваше имя?">
-			<input type="text" name="" class="text_field" placeholder="Ваш e-mail?">
-			<input type="text" name="" class="text_field" placeholder="Ваш телефон?">
+		<form action="javascript:void(0);" method="post" name="email" class="block_form">
+			<div class="text_wrap">
+				<input type="text" name="" class="text_field" required="">
+				<span class="placeholder">Ваше имя?</span>
+			</div>
+			<div class="text_wrap">
+				<input type="text" name="" class="text_field" required="" >
+				<span class="placeholder">Ваш e-mail?</span>
+			</div>
+			<div class="text_wrap">
+				<input type="text" name="" class="text_field" required="">
+				<span class="placeholder">Ваш телефон?</span>
+			</div>
 			<div class="btn_wrap">
 				<div class="btn_wrap_two">
 					<input type="submit" name="send" value="Послать сообщение" class="btn_field">
@@ -420,7 +479,7 @@ a.cl_show{
 		
 		
 	</section>
-	
+	</div>
 
 	<script src= 'bower_components/jquery/dist/jquery.js'></script>
 	<script src="lib.js"></script>
@@ -535,7 +594,10 @@ cl.on('click',function(){
 
 
 //////////////////////////////////////////////////		
-	
+	elem1.on('hover',function(){
+
+		
+	});
 
 
 
