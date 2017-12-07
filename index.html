@@ -533,19 +533,26 @@ a.cl_show{
 			var l_metka = elem.offset().left;
 			var l_this = item.offset().left;
 			var def = 0;
+			var n = null;
+			var flag_shift = null;
 			
 			if(l_metka > l_this) {
 
+				flag_shift = true;
 				def = l_metka - l_this;
+				n = childrens.length - 1;
 				
 
 			}
 			else {
+
+				flag_shift = false;
 				def = l_this - l_metka;
 				def = (-1)*def;
+				n = 0;
 			}
 
-			var n = childrens.length - 1;
+			var n_max = childrens.length - 1;
 			
 				var id = setInterval(function(){
 			childrens.eq(n).css({
@@ -556,8 +563,15 @@ a.cl_show{
 			top:elem.offset().top - childrens.eq(n).offset().top,
 			left:def
 		},400);
-		if(n <= 0 ) clearInterval(id);
-		else n--;
+		if(flag_shift){
+			if( n <= 0  ) clearInterval(id);
+			else n--;
+		}
+		else {
+			if( n >= n_max) clearInterval(id);
+			else n++;
+		}
+			
 
 			},60);
 			
