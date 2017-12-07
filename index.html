@@ -26,7 +26,7 @@
 			
 			
 			opacity: 1;
-			background: rgba(7,7,7,.7);
+			background: rgba(7,7,7,.6);
 
 			transition:background 1s ease-out;
 		}
@@ -47,6 +47,7 @@
 			left:30%;
 			/*transform: translateX(-50%);*/
 			visibility: hidden;
+			color:#fff;
 		}
 		.header_tr{
 			background: transparent;
@@ -378,7 +379,7 @@
 			top:0%;
 			left: 50%;
 			transform:translateX(-50%) scale(0) ;
-
+			z-index: 10;
 			max-width:1200px;
 			width:100%;
 			height: 100%;
@@ -401,8 +402,8 @@
 	position: absolute;
 	top:2%;
 	right:2%;
-	width: 40px;
-	height: 40px;
+	width: 30px;
+	height: 30px;
 	z-index: 3;
 	background: url(close.svg) center no-repeat ;
 	-webkit-background-size: 100%;
@@ -417,7 +418,7 @@ a.cl_show{
 	display: inline-block;
 	transform: translate(0,0) rotate(0deg);
 	opacity: 1;
-	transition: transform 20s ease-out, opacity 20s;
+	transition: transform 10s ease-out, opacity 10s;
 }
 .wrapper{
 	overflow: hidden;
@@ -456,7 +457,7 @@ a.cl_show{
 			</div>
 			<div class="btn_wrap">
 				<div class="btn_wrap_two">
-					<input type="submit" name="send" value="Послать сообщение" class="btn_field">
+					<input type="submit" name="send" value="Отправить" class="btn_field">
 				</div>
 			</div>
 
@@ -505,6 +506,9 @@ a.cl_show{
 			if(flag) return;
 			flag = true;
 			item = $(this);
+			item.css({
+				zIndex:'12'
+			});
 			/////////////////////////////////////////////
 			var elem_text = elem1.not(item).find('span'); 
 			var text = elem1.not(item).html();
@@ -591,12 +595,9 @@ cl.on('click',function(){
 			elem_text.css({
 			    transform:"translate(0,0) rotate(0deg)",
 			    opacity:'1',
-			     transition:'transform 15s ease-out, opacity 15s',
+			     transition:'transform 7s ease-out, opacity 7s',
 			});
-			if(index > 0) {
-
-				def = parent.offset().left - parent.prev().offset().left;
-			}
+			
 			var n = childrens.length - 1;
 			wrap_info.removeClass('wrap_info_add');
 			header.removeClass('header_tr');
@@ -607,7 +608,9 @@ cl.on('click',function(){
 			top:0,
 			left:0
 		},400);
-		if(n <= 0) { flag = false; clearInterval(id); }
+		if(n <= 0) { flag = false; clearInterval(id); item.css({
+				zIndex:'1'
+			}); }
 		else n--;
 
 			},100);

@@ -25,7 +25,7 @@ function isValueToNewArray(valueX,valueY,arr){
 ////////////////////////////////////////
 ///////////////////////////////////////
 ////////////////////////////////////////
-var randNumberForDef = [100,200,30,40];
+var randNumberForDef = [5,10,15,20];
 
 function generateArrRandObjects(string,randNumberForDef){
     var number = string.length;
