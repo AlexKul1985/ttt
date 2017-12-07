@@ -499,12 +499,12 @@ a.cl_show{
 		var flag = false;
 		var start_point = elem_p.eq(0).offset().left;
 		
-	////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////
 		elem1.on('click',function(){
 			if(flag) return;
 			flag = true;
 			item = $(this);
-			/////////////////
+			/////////////////////////////////////////////
 			var elem_text = elem1.not(item).find('span'); 
 			var text = elem1.not(item).html();
 			console.log(text);
@@ -526,15 +526,25 @@ a.cl_show{
 		setTimeout(function(){
 		cl.addClass('cl_show');
 		},800);
-			///////////////////////////////////////////
+			///////////////////////////////////////////////
 			var childrens =item.children();
 			var parent =item.parent();
 			var index = parent.index();
+			var l_metka = elem.offset().left;
+			var l_this = item.offset().left;
 			var def = 0;
-			if(index > 0) {
+			
+			if(l_metka > l_this) {
 
-				def = parent.offset().left - parent.prev().offset().left;
+				def = l_metka - l_this;
+				
+
 			}
+			else {
+				def = l_this - l_metka;
+				def = (-1)*def;
+			}
+
 			var n = childrens.length - 1;
 			
 				var id = setInterval(function(){
@@ -544,9 +554,9 @@ a.cl_show{
 			left:0
 		}).animate({
 			top:elem.offset().top - childrens.eq(n).offset().top,
-			left:elem.offset().left - elem1.offset().left - def
+			left:def
 		},400);
-		if(n <= 0) clearInterval(id);
+		if(n <= 0 ) clearInterval(id);
 		else n--;
 
 			},60);
@@ -594,12 +604,47 @@ cl.on('click',function(){
 
 
 
-
-//////////////////////////////////////////////////		
-	elem1.on('hover',function(){
-
-
-	});
+		// var flag_over = false;
+	//////////////////////////////////////////////////		
+	// elem1.on('mouseover',function(){
+	// 	if(flag_over) return;
+	// 	flag_over = true;
+	// 	item=$(this);
+	// 	var elem_text = item.find('span');
+	// 	var len = elem_text.length;
+	// 	var n = 0;
+	// 	var id = setInterval(function(){
+	// 		  elem_text.eq(n).css({
+	// 		  	position:'relative',
+	// 		  	top:'0px'
+	// 		  }).animate({
+	// 			top:'-10px'
+	// 		// transition:'transform 10s ease-out, opacity 10s'
+	// 		},200);
+	// 		  if(n == len-1) { clearInterval(id);}
+	// 		  else n++;
+	// 	},50);
+		  
+		
+	// });
+	////////////////////////////////////////////
+	// elem1.on('mouseout',function(){
+	// 	flag_over = false;
+	// 	item=$(this);
+	// 	var elem_text = item.find('span');
+	// 	var len = elem_text.length;
+	// 	var n = 0;
+	// 	var id = setInterval(function(){
+	// 		  elem_text.eq(n).animate({
+	// 			top:'0px'
+	// 		// transition:'transform 10s ease-out, opacity 10s'
+	// 		},200);
+	// 		  if(n == len-1) { clearInterval(id);}
+	// 		  else n++;
+	// 	},50);
+		  
+		
+	// });
 
 
 
